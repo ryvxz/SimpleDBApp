@@ -2,7 +2,5 @@ com\mycompany\simpledbapp\SimpleDBApp$User.class
 com\mycompany\simpledbapp\GuestFrame.class
 com\mycompany\simpledbapp\LoginFrame.class
 com\mycompany\simpledbapp\AdminFrame.class
-com\mycompany\simpledbapp\GuestFrame$1.class
 com\mycompany\simpledbapp\SimpleDBApp.class
 com\mycompany\simpledbapp\DatabaseHandler.class
-com\mycompany\simpledbapp\LoginFrame$1.class

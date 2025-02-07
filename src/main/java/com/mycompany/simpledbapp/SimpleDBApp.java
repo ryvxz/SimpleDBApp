@@ -1,11 +1,14 @@
 package com.mycompany.simpledbapp;
 
-import java.sql.*;
 import javax.swing.SwingUtilities;
+import java.sql.*;
 
 public class SimpleDBApp
 {
 
+    /**
+     * Represents a user with a username, password, and access role.
+     */
     private class User
     {
 
@@ -55,23 +58,37 @@ public class SimpleDBApp
 
     public SimpleDBApp(String username, String password, String database)
     {
-        String connStr = "jdbc:sqlite:src/main/resources/".concat(database); //jdbc:sqlite:src/main/resources/AccountsDB.db
+        String connStr = "jdbc:sqlite:src/main/resources/".concat(database); // Example: jdbc:sqlite:src/main/resources/AccountsDB.db
         try
         {
             conn = DriverManager.getConnection(connStr);
         } catch (SQLException e)
         {
             System.err.println("Failed to create connection");
-            System.err.println(e.toString());
+            e.printStackTrace();
         }
     }
 
+    /**
+     * Retrieves all users from the database.
+     *
+     * @return a ResultSet containing all users
+     * @throws SQLException if a database access error occurs
+     */
     public ResultSet getAll() throws SQLException
     {
         Statement stmt = conn.createStatement();
         return stmt.executeQuery("SELECT * FROM Users");
     }
 
+    /**
+     * Retrieves a user matching the given username and password.
+     *
+     * @param username the username to search for
+     * @param password the password to match
+     * @return a User object if found, or null otherwise
+     * @throws SQLException if a database access error occurs
+     */
     public User getUser(String username, String password) throws SQLException
     {
         String sqlStr = "SELECT * FROM Users WHERE username = ? AND password = ?";
@@ -81,15 +98,19 @@ public class SimpleDBApp
         ResultSet rs = pstmt.executeQuery();
         if (rs.next())
         {
-            return new User(rs.getString("username"), rs.getString("password"),
+            return new User(rs.getString("username"),
+                    rs.getString("password"),
                     rs.getString("user_role"));
         }
         return null;
     }
 
+    /*
+    SwingUtilities.invokeLater() places your code in the FIFO Queue of the event-dispatch thread (EDT)
+    , so it will be executed from the EDT whenever it has finished the other tasks it was doing.
+     */
     public static void main(String[] args)
     {
         SwingUtilities.invokeLater(LoginFrame::new);
     }
-
 }

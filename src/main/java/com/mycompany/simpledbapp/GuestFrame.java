@@ -1,8 +1,6 @@
 package com.mycompany.simpledbapp;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class GuestFrame extends JFrame
 {
@@ -20,14 +18,11 @@ public class GuestFrame extends JFrame
         JButton logoutButton = new JButton("Logout");
         add(logoutButton);
 
-        logoutButton.addActionListener(new ActionListener()
+        // Use lambda expression for logout action
+        logoutButton.addActionListener(e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                new LoginFrame();
-                dispose();
-            }
+            new LoginFrame();
+            dispose();
         });
 
         setLocationRelativeTo(null);

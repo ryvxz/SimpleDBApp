@@ -2,8 +2,6 @@ package com.mycompany.simpledbapp;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class LoginFrame extends JFrame
 {
@@ -35,19 +33,18 @@ public class LoginFrame extends JFrame
         loginButton = new JButton("Login");
         add(loginButton);
 
-        loginButton.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                handleLogin();
-            }
-        });
+        // Use lambda expression for login button action
+        loginButton.addActionListener(e -> handleLogin());
 
         setLocationRelativeTo(null);
         setVisible(true);
     }
 
+    /**
+     * Handles the login process when the login button is clicked. Validates the
+     * user's credentials and opens the appropriate frame based on the user
+     * role.
+     */
     private void handleLogin()
     {
         String username = usernameField.getText();
@@ -56,7 +53,7 @@ public class LoginFrame extends JFrame
         if (dbHandler.isValidUser(username, password))
         {
             String role = dbHandler.getUserRole(username);
-            if (role.equals("admin"))
+            if ("admin".equals(role))
             {
                 new AdminFrame();
             } else
@@ -67,11 +64,17 @@ public class LoginFrame extends JFrame
         } else
         {
             failedAttempts++;
-            JOptionPane.showMessageDialog(this, "Invalid login attempt " + failedAttempts, "Login Failed", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,
+                    "Invalid login attempt " + failedAttempts,
+                    "Login Failed",
+                    JOptionPane.ERROR_MESSAGE);
 
             if (failedAttempts >= 3)
             {
-                JOptionPane.showMessageDialog(this, "Too many failed attempts! Exiting.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this,
+                        "Too many failed attempts! Exiting.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
                 System.exit(0);
             }
         }

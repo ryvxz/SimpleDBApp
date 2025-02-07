@@ -2,7 +2,6 @@ package com.mycompany.simpledbapp;
 
 import javax.swing.*;
 import java.awt.*;
-import java.sql.*;
 
 public class AdminFrame extends JFrame
 {
@@ -26,6 +25,7 @@ public class AdminFrame extends JFrame
         JButton logoutButton = new JButton("Logout");
         add(logoutButton, BorderLayout.SOUTH);
 
+        // Use lambda expression for logout action
         logoutButton.addActionListener(e ->
         {
             new LoginFrame();
@@ -37,18 +37,14 @@ public class AdminFrame extends JFrame
         setVisible(true);
     }
 
+    /**
+     * Loads the list of users from the database and displays them in the text
+     * area.
+     */
     private void loadUserList()
     {
-        try (Connection conn = DriverManager.getConnection("jdbc:sqlite:src/main/resources/AccountsDB.db"); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery("SELECT username, user_role FROM Users"))
-        {
-
-            while (rs.next())
-            {
-                userList.append(rs.getString("username") + " - " + rs.getString("user_role") + "\n");
-            }
-        } catch (SQLException e)
-        {
-            e.printStackTrace();
-        }
+        // Retrieve the formatted list of users from DatabaseHandler.
+        String users = dbHandler.getAllUsersAsString();
+        userList.setText(users);
     }
 }
