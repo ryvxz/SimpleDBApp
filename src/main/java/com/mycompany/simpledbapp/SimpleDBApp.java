@@ -1,9 +1,11 @@
 package com.mycompany.simpledbapp;
 
 import java.sql.*;
+import javax.swing.SwingUtilities;
 
 public class SimpleDBApp
 {
+
     private class User
     {
 
@@ -48,12 +50,12 @@ public class SimpleDBApp
             this.accessRole = accessRole;
         }
     }
-    
+
     private Connection conn;
 
     public SimpleDBApp(String username, String password, String database)
     {
-        String connStr = "jdbc:sqlite:resources/".concat(database);
+        String connStr = "jdbc:sqlite:src/main/resources/".concat(database); //jdbc:sqlite:src/main/resources/AccountsDB.db
         try
         {
             conn = DriverManager.getConnection(connStr);
@@ -67,7 +69,7 @@ public class SimpleDBApp
     public ResultSet getAll() throws SQLException
     {
         Statement stmt = conn.createStatement();
-        return stmt.executeQuery("select * from accounts");
+        return stmt.executeQuery("SELECT * FROM Users");
     }
 
     public User getUser(String username, String password) throws SQLException
@@ -85,19 +87,24 @@ public class SimpleDBApp
         return null;
     }
 
+//    public static void main(String[] args)
+//    {
+//        SimpleDBApp jdbc = new SimpleDBApp("root", "root", "AccountsDB.db");
+//        try
+//        {
+//            ResultSet rs = jdbc.getAll();
+//            while (rs.next())
+//            {
+//                System.out.println(rs.getString("username") + rs.getString("password"));
+//            }
+//        } catch (SQLException e)
+//        {
+//            System.err.println(e.toString());
+//        }
+//    }
     public static void main(String[] args)
     {
-        SimpleDBApp jdbc = new SimpleDBApp("root", "root", "AccountsDB.db");
-        try
-        {
-            ResultSet rs = jdbc.getAll();
-            while (rs.next())
-            {
-                System.out.println(rs.getString("username") + rs.getString("password"));
-            }
-        } catch (SQLException e)
-        {
-            System.err.println(e.toString());
-        }
+        SwingUtilities.invokeLater(LoginFrame::new);
     }
+
 }
