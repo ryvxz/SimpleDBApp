@@ -4,11 +4,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.sql.*;
 
-public class AdminFrame extends JFrame {
+public class AdminFrame extends JFrame
+{
+
     private DatabaseHandler dbHandler;
     private JTextArea userList;
 
-    public AdminFrame() {
+    public AdminFrame()
+    {
         dbHandler = new DatabaseHandler();
 
         setTitle("Admin Panel");
@@ -23,7 +26,8 @@ public class AdminFrame extends JFrame {
         JButton logoutButton = new JButton("Logout");
         add(logoutButton, BorderLayout.SOUTH);
 
-        logoutButton.addActionListener(e -> {
+        logoutButton.addActionListener(e ->
+        {
             new LoginFrame();
             dispose();
         });
@@ -33,15 +37,17 @@ public class AdminFrame extends JFrame {
         setVisible(true);
     }
 
-    private void loadUserList() {
-        try (Connection conn = DriverManager.getConnection("jdbc:sqlite:src/main/resources/AccountsDB.db");
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT username, user_role FROM Users")) {
+    private void loadUserList()
+    {
+        try (Connection conn = DriverManager.getConnection("jdbc:sqlite:src/main/resources/AccountsDB.db"); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery("SELECT username, user_role FROM Users"))
+        {
 
-            while (rs.next()) {
+            while (rs.next())
+            {
                 userList.append(rs.getString("username") + " - " + rs.getString("user_role") + "\n");
             }
-        } catch (SQLException e) {
+        } catch (SQLException e)
+        {
             e.printStackTrace();
         }
     }

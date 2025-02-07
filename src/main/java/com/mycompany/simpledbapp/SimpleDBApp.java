@@ -87,21 +87,6 @@ public class SimpleDBApp
         return null;
     }
 
-//    public static void main(String[] args)
-//    {
-//        SimpleDBApp jdbc = new SimpleDBApp("root", "root", "AccountsDB.db");
-//        try
-//        {
-//            ResultSet rs = jdbc.getAll();
-//            while (rs.next())
-//            {
-//                System.out.println(rs.getString("username") + rs.getString("password"));
-//            }
-//        } catch (SQLException e)
-//        {
-//            System.err.println(e.toString());
-//        }
-//    }
     public static void main(String[] args)
     {
         SwingUtilities.invokeLater(LoginFrame::new);

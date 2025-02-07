@@ -5,16 +5,19 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class LoginFrame extends JFrame {
+public class LoginFrame extends JFrame
+{
+
     private JTextField usernameField;
     private JPasswordField passwordField;
     private JButton loginButton;
     private int failedAttempts = 0;
     private DatabaseHandler dbHandler;
 
-    public LoginFrame() {
+    public LoginFrame()
+    {
         dbHandler = new DatabaseHandler();
-        
+
         setTitle("Login");
         setSize(300, 200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -32,9 +35,11 @@ public class LoginFrame extends JFrame {
         loginButton = new JButton("Login");
         add(loginButton);
 
-        loginButton.addActionListener(new ActionListener() {
+        loginButton.addActionListener(new ActionListener()
+        {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e)
+            {
                 handleLogin();
             }
         });
@@ -43,23 +48,29 @@ public class LoginFrame extends JFrame {
         setVisible(true);
     }
 
-    private void handleLogin() {
+    private void handleLogin()
+    {
         String username = usernameField.getText();
         String password = new String(passwordField.getPassword());
 
-        if (dbHandler.isValidUser(username, password)) {
+        if (dbHandler.isValidUser(username, password))
+        {
             String role = dbHandler.getUserRole(username);
-            if (role.equals("admin")) {
+            if (role.equals("admin"))
+            {
                 new AdminFrame();
-            } else {
+            } else
+            {
                 new GuestFrame();
             }
             dispose();
-        } else {
+        } else
+        {
             failedAttempts++;
             JOptionPane.showMessageDialog(this, "Invalid login attempt " + failedAttempts, "Login Failed", JOptionPane.ERROR_MESSAGE);
 
-            if (failedAttempts >= 3) {
+            if (failedAttempts >= 3)
+            {
                 JOptionPane.showMessageDialog(this, "Too many failed attempts! Exiting.", "Error", JOptionPane.ERROR_MESSAGE);
                 System.exit(0);
             }
